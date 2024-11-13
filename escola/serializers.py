@@ -1,6 +1,8 @@
 from rest_framework import serializers
 from escola.models import Estudante, Curso, Matricula
 
+# https://www.django-rest-framework.org/api-guide/serializers/
+
 class EstudanteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Estudante

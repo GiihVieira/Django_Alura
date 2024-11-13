@@ -16,6 +16,7 @@ class MatriculaViewSet(viewsets.ModelViewSet):
     queryset = Matricula.objects.all()
     serializer_class = MatriculaSerializer
 
+# https://www.django-rest-framework.org/api-guide/generic-views/
 class ListaMatriculaEstudante(generics.ListAPIView):
     def get_queryset(self):
         queryset = Matricula.objects.filter(estudante_id=self.kwargs['pk']) # Filter como o nome já diz, ele filtra apenas uma informação dentro do objeto
