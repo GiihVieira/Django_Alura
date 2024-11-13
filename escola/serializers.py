@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from escola.models import Estudante, Curso, Matricula
+from escola.validators import cpf_invalido, nome_invalido, celular_invalido
 
 # https://www.django-rest-framework.org/api-guide/serializers/
 
@@ -7,6 +8,15 @@ class EstudanteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Estudante
         fields = ['id', 'nome', 'email', 'cpf', 'data_nascimento', 'celular']
+        
+    def validate(self, data):
+        if cpf_invalido(data['cpf']):
+            raise serializers.ValidationError({'cpf':'O CPF deve ser um valor válido!'})
+        if nome_invalido(data['nome']):
+            raise serializers.ValidationError({'nome':'O nome só pode ter letras!'})
+        if celular_invalido(data['celular']):
+            raise serializers.ValidationError({'celular':'O celular dever seguir o modelo: 99 99999-9999'})
+        return data
 
 class CursoSerializer(serializers.ModelSerializer):
     class Meta:
